@@ -1,0 +1,1151 @@
+body {
+font-family: 'Segoe UI', sans-serif;
+margin: 0;
+padding: 0;
+background-color: #290a30;
+color: #ffffff;
+display: flex;
+justify-content: center;
+align-items: center;
+height: 100vh; /* Full viewport height */
+
+}
+
+.container {
+padding: 2rem;
+display: flex;
+flex-direction: column;
+align-items: center;
+text-align: center;
+max-width: 1200px;
+width: 100%;
+
+}
+
+ .buttons {
+   display: flex;
+   justify-content: center;
+   align-items: center;
+   gap: 2rem; /* Adjusted gap to 2rem for better spacing */
+   margin: 2rem 0; /* Reduced the margin for better alignment */
+   flex-wrap: wrap;
+ }
+
+ .action-btn {
+   padding: 2rem 2.5rem;
+   width: 180px;
+   height: 150px;
+   border: none;
+   border-radius: 20px;
+   background: #750080;
+   color: #fff;
+   font-size: 1.2rem;
+   cursor: pointer;
+   transition: all 0.2s ease-in-out;
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   justify-content: center;
+   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+   margin: 0 1rem; /* Added margin for individual buttons */
+ }
+
+.action-btn:hover {
+background: #5a0061;
+transform: scale(1.05);
+}
+
+.normal-btn {
+padding: 0.5rem 1rem;
+background: #750080;
+color: #fff;
+border: none;
+margin: 0 1rem;
+border-radius: 10px;
+cursor: pointer;
+transition: background 0.2s ease-in-out;
+}
+
+.normal-btn:hover {
+background: #5a0061;
+transform: scale(1.05);
+}
+
+.section {
+display: none;
+padding: 1.5rem;
+border-radius: 12px;
+background-color: #1e1e2f;
+margin-top: 0.1rem;
+width: 100%;
+height: auto;
+}
+
+/* Make viewSection take available height with flex layout */
+#viewSection {
+  display: none;
+  flex-direction: column;
+  height: calc(100vh - 80px);
+  width: 100%;
+  overflow-y: auto; /* Change from hidden to auto */
+  position: relative;
+}
+
+.drop-zone {
+border: 2px dashed #aaa;
+padding: 2rem;
+text-align: center;
+border-radius: 10px;
+background-color: #2d2d3d;
+margin-bottom: 1rem;
+}
+
+.file-list {
+margin-top: 1rem;
+font-size: 0.95rem;
+}
+
+/* Make top-controls stay fixed */
+.top-controls {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  position: sticky; /* Already correct */
+  top: 0;
+  background-color: #290a30;
+  padding: 1rem 0;
+  width: 100%;
+  z-index: 100;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.menu-right {
+display: flex;
+flex-wrap: wrap; /* Allow wrap */
+justify-content: center; /* Center all items */
+align-items: center;
+gap: 1rem; /* <-- this gives space between search and buttons */
+flex: 1;
+}
+.menu-buttons {
+padding-top: 0.5rem;
+}
+#searchInput {
+flex: 1 1 300px; /* Flex-grow and shrink, min 300px */
+max-width: 400px;
+}
+
+/* Buttons styling */
+#anomalyScanBtn, #analysisBtn {
+flex: 1 1 150px;
+max-width: 200px;
+}
+
+.highlight {
+background-color: #9c00aa;
+color: white;
+padding: 2px 4px;
+border-radius: 3px;
+font-weight: bold;
+}
+
+
+/* When folderList is hidden, ensure logGrid expands appropriately */
+#logGrid {
+  flex: 1;
+  position: relative;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(30, 30, 45, 0.5);
+  /* Ensure it takes up available space when other elements are hidden */
+  min-height: calc(100vh - 180px);
+}
+
+
+/* Modern folder and file list styles */
+.modern-list {
+  background-color: rgba(25, 25, 40, 0.7);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  width: 97%;
+  /* Remove max-height constraint */
+}
+
+.folder-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+/* Layout containers */
+#folderList {
+  margin-top: 1rem;
+  overflow-y: auto; /* Make scrollable */
+}
+
+.folder-item {
+  display: flex;
+  align-items: center;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(40, 40, 60, 0.7);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin: 0 1rem;
+  border-left: 3px solid transparent;
+  margin-bottom: 0.75rem; /* Add consistent vertical spacing */
+
+}
+
+#logGrid {
+  flex: 1;
+  overflow-y: auto; /* Make it scrollable */
+  position: relative;
+  margin-top: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: rgba(30, 30, 45, 0.5);
+  max-height: calc(100vh - 250px); /* Adjust based on folderList height */
+}
+
+.folder-item:hover {
+  background-color: rgba(50, 50, 75, 0.8);
+  transform: translateY(-2px);
+}
+
+.folder-item.active {
+  background-color: rgba(70, 30, 80, 0.8);
+  border-left: 3px solid #9c00aa;
+  box-shadow: 0 4px 15px rgba(156, 0, 170, 0.3);
+}
+
+.folder-icon {
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+}
+
+.folder-name {
+  font-weight: 500;
+}
+
+/* Notepad-style grid for files */
+.notepad-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+  max-height: 350px; /* Fixed height */
+  overflow-y: auto; /* Add scrolling */
+  padding-right: 8px; /* Space for scrollbar */
+}
+
+/* Style scrollbars for containers */
+#folderList::-webkit-scrollbar,
+#logGrid::-webkit-scrollbar,
+.notepad-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+#folderList::-webkit-scrollbar-track,
+#logGrid::-webkit-scrollbar-track,
+.notepad-grid::-webkit-scrollbar-track {
+  background: rgba(30, 30, 45, 0.5);
+  border-radius: 4px;
+}
+
+#folderList::-webkit-scrollbar-thumb,
+#logGrid::-webkit-scrollbar-thumb,
+.notepad-grid::-webkit-scrollbar-thumb {
+  background: rgba(80, 80, 120, 0.7);
+  border-radius: 4px;
+}
+
+.notepad-item {
+display: flex;
+align-items: center;
+padding: 0.75rem;
+background-color: rgba(40, 40, 60, 0.7);
+border-radius: 8px;
+cursor: pointer;
+transition: all 0.2s ease;
+border: 1px solid transparent;
+}
+
+.notepad-item:hover {
+background-color: rgba(50, 50, 75, 0.8);
+border-color: #8a0096;
+}
+
+.notepad-item.active {
+background-color: rgba(70, 30, 80, 0.8);
+border-color: #9c00aa;
+box-shadow: 0 0 15px rgba(156, 0, 170, 0.3);
+}
+
+.file-icon {
+font-size: 1.25rem;
+margin-right: 0.75rem;
+color: #d0d0d0;
+}
+
+.file-name {
+font-size: 0.9rem;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+}
+
+/* Log files container layout */
+.log-view-grid {
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+width: 97%;
+}
+
+.log-files-container {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 600px));
+gap: 1.5rem;
+width: 100%;
+justify-content: center;
+padding-top: 0;
+padding-bottom: 2rem;
+}
+
+/* Center single file */
+.log-files-container.single-file {
+display: flex;
+justify-content: center;
+align-items: flex-start;
+width: 100%;
+}
+
+.log-files-container.single-file .log-card {
+max-width: 800px;
+margin: 0 auto;
+}
+
+/* Log card styling */
+.log-card {
+background: linear-gradient(145deg, #1e1e2f 0%, #252540 100%);
+border: 1px solid rgba(100, 100, 150, 0.3);
+border-radius: 12px;
+width: 100%;
+max-width: 600px;
+margin-bottom: 1.5rem;
+display: flex;
+flex-direction: column;
+overflow: hidden;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2), 0 6px 10px rgba(0, 0, 0, 0.15);
+transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.log-card:hover {
+transform: translateY(-2px);
+box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Fix card header to stay on top of content when scrolling */
+.log-card-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0.85rem 1.2rem;
+/* Updated gradient with the #750080 color */
+background: linear-gradient(90deg, rgba(117, 0, 128, 0.9) 0%, rgba(117, 0, 128, 0.8) 100%);
+border-radius: 12px 12px 0 0;
+border-bottom: 1px solid rgba(100, 100, 150, 0.3);
+position: sticky;
+top: 0;
+z-index: 50;
+min-height: 55px;
+box-sizing: border-box;
+}
+
+
+.log-card-header h4 {
+margin: 0;
+font-size: 1.1rem;
+color: #fff;
+overflow: hidden;
+text-overflow: ellipsis;
+white-space: nowrap;
+max-width: calc(100% - 35px);
+font-weight: 500;
+text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+letter-spacing: 0.5px;
+}
+
+/* Fixed height for content with scroll */
+.log-card-content {
+height: 500px;
+width: 100%;
+overflow: auto;
+padding: 1.2rem;
+white-space: pre-wrap;
+font-family: 'Consolas', 'Roboto Mono', monospace;
+font-size: 0.9rem;
+background-color: rgba(25, 25, 35, 0.95);
+box-shadow: inset 0 2px 12px rgba(0, 0, 0, 0.25);
+box-sizing: border-box;
+scroll-behavior: smooth;
+}
+
+/* Custom scrollbar for modern browsers */
+.log-card-content::-webkit-scrollbar {
+width: 8px;
+height: 8px;
+}
+
+.log-card-content::-webkit-scrollbar-track {
+background: rgba(30, 30, 45, 0.6);
+}
+
+.log-card-content::-webkit-scrollbar-thumb {
+background: rgba(100, 50, 150, 0.5);
+border-radius: 4px;
+}
+
+.log-card-content::-webkit-scrollbar-thumb:hover {
+background: rgba(120, 60, 170, 0.7);
+}
+
+.log-card-footer {
+display: flex;
+justify-content: flex-end;
+align-items: center;
+padding: 0.6rem 1.2rem;
+background: rgba(35, 35, 50, 0.8);
+border-top: 1px solid rgba(100, 100, 150, 0.3);
+font-size: 0.85rem;
+color: #bbb;
+border-radius: 0 0 12px 12px;
+height: 45px;
+box-sizing: border-box;
+
+}
+
+/* Line number styling */
+.log-line {
+display: flex;
+padding: 3px 0;
+border-bottom: 1px dotted rgba(255, 255, 255, 0.07);
+transition: background-color 0.15s ease;
+}
+
+.log-line:hover {
+background-color: rgba(70, 40, 90, 0.15);
+}
+
+.line-number {
+font-weight: 600;
+margin-right: 12px;
+min-width: 45px;
+color: rgba(180, 120, 200, 0.7);
+user-select: none;
+text-align: right;
+transition: color 0.15s ease;
+}
+
+.log-line:hover .line-number {
+color: rgba(200, 130, 220, 0.9);
+}
+
+.line-content {
+flex: 1;
+word-break: break-word;
+color: #ddd;
+}
+
+/* Close button styling */
+.close-btn {
+background: rgba(100, 50, 120, 0.3);
+border: none;
+color: rgba(255, 255, 255, 0.7);
+cursor: pointer;
+font-size: 0.9rem;
+padding: 0;
+height: 28px;
+width: 28px;
+display: flex;
+align-items: center;
+justify-content: center;
+transition: all 0.2s ease;
+border-radius: 50%;
+margin-left: 8px;
+}
+
+.close-btn:hover {
+color: #fff;
+background: rgba(140, 70, 160, 0.5);
+transform: scale(1.1);
+}
+
+
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  opacity: 1;
+  transition: opacity 0.5s ease;
+}
+
+.loading-overlay.buffer-state .loading-content {
+  /* Simplified content for buffer state */
+  padding: 25px;
+}
+
+.buffer-state .progress-container,
+.buffer-state .progress-text {
+  display: none;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.loading-overlay.fade-out {
+  opacity: 0;
+}
+
+.loading-content {
+  background-color: #1e1e1e;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 90%;
+  width: 400px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  border: 1px solid #333;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top-color: #750080;
+  animation: spin 1s linear infinite;
+  margin: 0 auto 20px;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.loading-message {
+  color: #fff;
+  font-size: 1.2rem;
+  margin-bottom: 20px;
+}
+
+.progress-container {
+  width: 100%;
+  height: 10px;
+  background-color: #333;
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #750080;
+  width: 0%;
+  transition: width 0.3s ease;
+}
+
+.progress-text {
+  color: #ccc;
+  font-size: 0.9rem;
+}
+/* Full width wrapper for analysis output in grid */
+.full-width-grid-item {
+  grid-column: 1 / -1; /* Span all columns in the grid */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+}
+
+/* Update analysis output container to fit better in the layout */
+.analysis-output-container {
+  background-color: #1e1e1e;
+  border: 1px solid #333;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  width: 97%; /* Match the width of the log-view-grid */
+  max-width: 1200px; /* Prevent it from getting too wide on large screens */
+  height: 600px;
+  max-height: 600px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* For single file mode, limit the width of the analysis container to match single file */
+.log-files-container.single-file + .full-width-grid-item .analysis-output-container,
+.log-files-container.single-file .analysis-output-container {
+  max-width: 800px;
+}
+
+/* When we have a single file and analysis output, adjust styles */
+.log-files-container:not(.multi-file) .log-card:only-of-type {
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto 1.5rem auto;
+}
+
+/* Ensure proper spacing between the single file and the analysis output */
+.log-files-container:not(.multi-file) .full-width-grid-item {
+  margin-top: 0;
+}
+
+.output-header {
+  padding: 10px 15px;
+  background-color: #252525;
+  border-bottom: 1px solid #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  user-select: none;
+}
+
+.output-title-section {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.output-header h3 {
+  color: #eee;
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+.output-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.download-btn {
+  background-color: transparent;
+  color: #ccc;
+  border: 1px solid #666;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.download-btn:hover {
+  background-color: rgba(117, 0, 128, 0.2);
+  color: #fff;
+  border-color: #750080;
+}
+
+.close-btn {
+  background-color: transparent;
+  color: #999;
+  border: none;
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  color: #fff;
+  background-color: rgba(255, 0, 0, 0.2);
+}
+
+.mode-switch-btn {
+  background-color: #750080;
+  color: white;
+  border: none;
+  gap: 10px;
+  padding: 4px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: all 0.2s ease;
+}
+
+.mode-switch-btn:hover {
+  background-color: #8f0099;
+}
+
+.output-content {
+  padding: 15px;
+  overflow-y: auto;
+  flex-grow: 1;
+  color: #ddd;
+}
+
+/* Results summary styles */
+.results-summary {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 15px;
+  background-color: #252525;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  border-left: 3px solid #750080;
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  min-width: 120px;
+}
+
+.summary-label {
+  font-size: 0.8rem;
+  color: #aaa;
+  margin-bottom: 5px;
+}
+
+.summary-value {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.danger-counts, .risk-counts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.danger-high, .risk-critical, .risk-high {
+  color: #ff4d4d;
+  font-weight: 500;
+  gap: 10px;
+}
+
+.danger-medium, .risk-medium {
+  color: #ffcc00;
+  font-weight: 500;
+  gap: 10px;
+}
+
+.danger-low, .risk-low {
+  color: #66cc66;
+  font-weight: 500;
+  gap: 10px;
+}
+
+.no-danger, .risk-normal {
+  color: #66cc66;
+  font-weight: 500;
+  gap: 10px;
+}
+
+/* Table styles */
+.table-container {
+  overflow-x: auto;
+  margin-top: 20px;
+}
+
+.results-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  color: #ddd;
+}
+
+.results-table th {
+  background-color: #2a2a2a;
+  padding: 10px;
+  text-align: left;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  border-bottom: 1px solid #444;
+}
+
+.results-table td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #333;
+  vertical-align: middle;
+}
+
+.results-table tbody tr {
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+}
+
+.results-table tbody tr:hover {
+  background-color: #2a2a2a;
+}
+
+/* Badge styles */
+.badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.badge-critical {
+  background-color: rgba(255, 0, 0, 0.2);
+  color: #ff4d4d;
+  border: 1px solid rgba(255, 0, 0, 0.3);
+}
+
+.badge-high {
+  background-color: rgba(255, 77, 77, 0.15);
+  color: #ff6666;
+  border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
+.badge-medium {
+  background-color: rgba(255, 204, 0, 0.15);
+  color: #ffcc00;
+  border: 1px solid rgba(255, 204, 0, 0.3);
+}
+
+.badge-low {
+  background-color: rgba(102, 204, 102, 0.15);
+  color: #66cc66;
+  border: 1px solid rgba(102, 204, 102, 0.3);
+}
+
+.badge-normal {
+  background-color: rgba(102, 204, 102, 0.15);
+  color: #66cc66;
+  border: 1px solid rgba(102, 204, 102, 0.3);
+}
+
+/* Accordion styles */
+.accordion-container {
+  margin-top: 20px;
+}
+
+.accordion {
+  margin-bottom: 10px;
+  border: 1px solid #333;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.accordion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 15px;
+  background-color: #252525;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  user-select: none;
+}
+
+.accordion-header:hover {
+  background-color: #2a2a2a;
+}
+
+.accordion-header.active {
+  background-color: #2a2a2a;
+  border-bottom: 1px solid #333;
+}
+
+.accordion-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1;
+}
+
+.file-name {
+  color: #eee;
+  font-weight: 500;
+}
+
+.risk-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.accordion-counts {
+  display: flex;
+  gap: 10px;
+  font-size: 0.8rem;
+}
+
+.accordion-icon {
+  color: #999;
+  font-size: 0.8rem;
+  transition: transform 0.2s ease;
+}
+
+.accordion-header.active .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.accordion-panel {
+  background-color: #1e1e1e;
+  padding: 15px;
+  display: none;
+}
+
+/* No results styles */
+.no-results {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  color: #aaa;
+}
+
+.success-icon {
+  font-size: 3rem;
+  color: #66cc66;
+  margin-bottom: 15px;
+}
+
+.no-issues {
+  color: #66cc66;
+  text-align: center;
+  padding: 10px;
+}
+
+/* Log content styles */
+.log-content {
+  font-family: 'Consolas', 'Courier New', monospace;
+  word-break: break-all;
+}
+
+/* Danger level row styles */
+.danger-level-high, .risk-level-critical, .risk-level-high {
+  background-color: rgba(255, 77, 77, 0.1);
+}
+
+.danger-level-medium, .risk-level-medium {
+  background-color: rgba(255, 204, 0, 0.1);
+}
+
+.danger-level-low, .risk-level-low {
+  background-color: rgba(102, 204, 102, 0.05);
+}
+
+/* Highlight styles for clicked lines */
+.highlight-line {
+  background-color: rgba(117, 0, 128, 0.2) !important;
+  transition: background-color 1s ease;
+  animation: pulse 1s;
+}
+
+/* Add highlight effect for newly opened files */
+.highlight-card {
+animation: highlight-pulse 1s ease-in-out;
+}
+
+@keyframes highlight-pulse {
+0% { box-shadow: 0 0 0 0 rgba(140, 70, 200, 0.7); }
+70% { box-shadow: 0 0 0 10px rgba(140, 70, 200, 0); }
+100% { box-shadow: 0 0 0 0 rgba(140, 70, 200, 0); }
+}
+
+
+
+.close-btn {
+background: transparent;
+border: none;
+color: #fff;
+cursor: pointer;
+font-size: 1.2rem;
+padding: 0.2rem 0.5rem;
+border-radius: 4px;
+transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+background: rgba(255, 255, 255, 0.2);
+}
+
+/* Back to files button */
+.back-to-files-btn {
+padding: 0.5rem 1rem;
+background: #750080;
+color: #fff;
+border: none;
+margin: 0 1rem;
+border-radius: 10px;
+cursor: pointer;
+transition: background 0.2s ease-in-out;
+}
+
+.back-to-files-btn:hover {
+background: #5a0061;
+transform: scale(1.05);
+}
+
+.files-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+margin-bottom: 1rem;
+padding-bottom: 0.5rem;
+border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+width: 100%;
+}
+
+.empty-state {
+padding: 2rem;
+text-align: center;
+color: #aaa;
+background-color: rgba(30, 30, 45, 0.5);
+border-radius: 8px;
+margin-top: 1rem;
+}
+
+.error-message {
+padding: 1rem;
+background-color: rgba(220, 53, 69, 0.3);
+border-left: 4px solid #dc3545;
+border-radius: 4px;
+margin-top: 1rem;
+}
+
+.custom-file-btn {
+display: inline-block;
+margin-top: 1rem;
+padding: 0.75rem 1.5rem;
+background-color: #750080;
+color: #fff;
+font-size: 1rem;
+border-radius: 10px;
+cursor: pointer;
+transition: background 0.2s ease-in-out;
+box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.custom-file-btn:hover {
+background-color: #5a0061;
+}
+
+input[type="file"] {
+margin-top: 1rem;
+color: white;
+}
+
+.top-controls input[type="text"] {
+padding: 0.6rem;
+border-radius: 6px;
+border: none;
+width: 250px;
+background-color: #2d2d3d;
+color: white;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+width: 10px;
+height: 10px;
+}
+
+::-webkit-scrollbar-track {
+background: #2d2d3d;
+border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+background: #750080;
+border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+background: #5a0061;
+}
+
+/* Media queries for responsive design */
+@media (max-width: 1024px) {
+.log-files-container {
+ grid-template-columns: 1fr;
+}
+
+.log-card {
+ max-width: 100%;
+}
+
+.log-card-content {
+ height: 450px;
+}
+}
+
+@media (max-width: 768px) {
+.container {
+ padding: 1rem;
+}
+
+.top-controls {
+ justify-content: center;
+ align-items: center;
+ gap: 1rem;
+}
+
+.menu-right {
+ flex-direction: row;
+ justify-content: center;
+ gap: 1rem;
+}
+
+#searchInput, #anomalyScanBtn, #analysisBtn {
+ flex: 1 1 100%;
+ max-width: 400px;
+ text-align: center;
+}
+
+.log-card-content {
+ height: 350px;
+}
+
+#logGrid {
+ max-height: calc(100vh - 230px);
+}
+}
+
+
+@media (max-width: 600px) {
+.buttons {
+ flex-direction: column;
+ gap: 1.5rem;
+}
+
+.action-btn {
+ width: 100%;
+ height: auto;
+ padding: 1.5rem;
+}
+
+.log-card-content {
+ height: 300px;
+}
+}

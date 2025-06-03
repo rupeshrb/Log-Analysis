@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Network Monitor</title>
+    <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="../js/home.js"></script>
+    <style>
+        :root {
+            --primary-color: #290a30;
+            --secondary-color: #3d1145;
+            --accent-color: #8a2be2;
+            --text-color: #f0f0f0;
+            --alert-high: #ff3860;
+            --alert-medium: #ffdd57;
+            --alert-low: #48c774;
+            --chart-background: rgba(41, 10, 48, 0.7);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #290a30;
+            color: var(--text-color);
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            flex-wrap: wrap; /* Allow wrapping on small screens */
+            gap: 15px; /* Gap between wrapped items */
+        }
+
+        .header-left, .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Fixed gap between items */
+            flex-wrap: wrap; /* Allow wrapping */
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            padding: 10px 15px; /* Slightly more compact padding */
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            min-width: 140px; /* Minimum width prevents squishing */
+            justify-content: center; /* Center content inside button */
+        }
+        
+        button:hover {
+            background-color: var(--accent-color);
+            transform: translateY(-2px);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        button i {
+            font-size: 18px;
+        }
+        
+        .counter {
+            background-color: var(--secondary-color);
+            padding: 8px 15px;
+            border-radius: 8px;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            min-width: 100px; /* Minimum width */
+        }
+        .counter i {
+            color: var(--accent-color);
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .chart-container {
+            background-color: var(--secondary-color);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            position: relative;
+            height: 350px; /* Fixed height */
+            transition: transform 0.3s ease;
+            overflow: hidden; /* Prevent content from overflowing */
+        }
+        
+        .chart-container:hover {
+            transform: translateY(-5px);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .chart-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .alerts-container {
+            grid-column: span 2;
+            height: 400px;
+        }
+        .chart-wrapper {
+            position: relative;
+            height: calc(100% - 50px); /* Account for the header */
+            width: 100%;
+        }
+        .chart-wrapper .loading {
+    top: 50%;
+    left: 50%;
+}
+
+/* In alerts container, position the loader properly */
+.alerts-container .loading {
+    top: 50%;
+    left: 50%;
+}
+        
+        .alert-list {
+            max-height: calc(100% - 50px); /* Account for the header */
+            overflow-y: auto;
+            margin-top: 15px;
+        }
+        
+        .alert-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            background-color: rgba(255, 255, 255, 0.05);
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .alert-high {
+            border-left: 4px solid var(--alert-high);
+        }
+        
+        .alert-medium {
+            border-left: 4px solid var(--alert-medium);
+        }
+        
+        .alert-low {
+            border-left: 4px solid var(--alert-low);
+        }
+        
+        .alert-details {
+            flex-grow: 1;
+        }
+        
+        .alert-type {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .alert-description {
+            font-size: 14px;
+            opacity: 0.8;
+        }
+        
+        .alert-meta {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
+        
+        .alert-time {
+            font-size: 12px;
+            opacity: 0.7;
+        }
+        
+        .alert-source {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        /* Notification */
+        #notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            max-width: 400px;
+            animation: slideIn 0.3s ease-out, fadeOut 0.3s ease-in 4.7s;
+            opacity: 0;
+            transform: translateX(100%);
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+        
+        .notification-high {
+            border-left: 4px solid var(--alert-high);
+        }
+        
+        .notification-medium {
+            border-left: 4px solid var(--alert-medium);
+        }
+        
+        .notification-low {
+            border-left: 4px solid var(--alert-low);
+        }
+        
+        .notification-icon {
+            font-size: 24px;
+            color: var(--alert-high);
+        }
+        
+        .notification-content {
+            flex-grow: 1;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .notification-message {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Loading spinner */
+        .loading {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 40px;
+    height: 40px;
+    border: 4px solid var(--secondary-color);
+    border-radius: 50%;
+    border-top: 4px solid var(--accent-color);
+    animation: spin 1s linear infinite;
+    z-index: 10; /* Ensure it's above other content */
+    background-color: rgba(41, 10, 48, 0.6); /* Semi-transparent background */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    padding: 10px; /* Add some padding around the spinner */
+    box-sizing: content-box; /* Make sure padding doesn't affect the spinner size */
+    display: none; /* Hidden by default */
+}
+        
+/* Dashboard Controls Styles */
+.dashboard-controls {
+    display: flex;
+    align-items: center;
+    margin-left: 10px;
+}
+
+.refresh-panel {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--secondary-color);
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+.refresh-options {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 10px;
+}
+
+.toggle-switch {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+    gap: 8px;
+}
+
+.toggle-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.toggle-slider {
+    position: relative;
+    display: inline-block;
+    width: 40px;
+    height: 20px;
+    background-color: var(--primary-color);
+    border-radius: 20px;
+    transition: .4s;
+}
+
+.toggle-slider:before {
+    position: absolute;
+    content: "";
+    height: 16px;
+    width: 16px;
+    left: 2px;
+    bottom: 2px;
+    background-color: white;
+    border-radius: 50%;
+    transition: .4s;
+}
+
+input:checked + .toggle-slider {
+    background-color: var(--accent-color);
+}
+
+input:checked + .toggle-slider:before {
+    transform: translateX(20px);
+}
+
+.toggle-label {
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.select-control {
+    background-color: var(--primary-color);
+    color: var(--text-color);
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    font-size: 14px;
+}
+
+.refresh-status {
+    font-size: 12px;
+    color: var(--accent-color);
+    white-space: nowrap;
+}
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        
+        .active-capture {
+            color: var(--alert-low);
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+        canvas {
+            width: 100% !important;
+            height: 100% !important;
+        }
+        /* Icon styles */
+        .icon {
+            display: inline-flex; /* Better alignment with text */
+            width: 20px;
+            height: 20px;
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            flex-shrink: 0; /* Prevent icon from shrinking */
+        }
+        button span:not(.icon) {
+    white-space: nowrap; /* Keep button text on one line */
+}
+#captureStatus {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+}
+
+#captureStatus span {
+    font-weight: 600;
+}
+        .icon-monitor {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f0f0f0' viewBox='0 0 24 24'%3E%3Cpath d='M21 16H3V4h18zm0-14H3c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h7v2H8v2h8v-2h-2v-2h7c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2z'/%3E%3C/svg%3E");
+        }
+        
+        .icon-refresh {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23f0f0f0' viewBox='0 0 24 24'%3E%3Cpath d='M17.65 6.35C16.2 4.9 14.21 4 12 4c-4.42 0-7.99 3.58-7.99 8s3.57 8 7.99 8c3.73 0 6.84-2.55 7.73-6h-2.08c-.82 2.33-3.04 4-5.65 4-3.31 0-6-2.69-6-6s2.69-6 6-6c1.66 0 3.14.69 4.22 1.78L13 11h7V4l-2.35 2.35z'/%3E%3C/svg%3E");
+        }
+        
+        .icon-entries {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%238a2be2' viewBox='0 0 24 24'%3E%3Cpath d='M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z'/%3E%3C/svg%3E");
+        }
+        
+        .icon-alert {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23ff3860' viewBox='0 0 24 24'%3E%3Cpath d='M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z'/%3E%3C/svg%3E");
+        }
+        
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--primary-color);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 4px;
+        }
+        /* Make header fully responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .header-left, .header-right {
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    button, .counter {
+        flex: 1;
+        min-width: 0; /* Allow shrinking on very small screens */
+    }
+}
+
+@media (max-width: 992px) {
+    .dashboard-controls {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 10px;
+        margin-left: 0;
+    }
+    
+    .refresh-panel {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .refresh-options {
+        margin-top: 8px;
+        margin-left: 0;
+        width: 100%;
+        justify-content: space-between;
+    }
+}
+
+@media (max-width: 576px) {
+    .refresh-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+    }
+}
+
+/* For extremely small screens */
+@media (max-width: 480px) {
+    .header-left, .header-right {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    button, .counter {
+        width: 100%;
+        justify-content: center;
+    }
+}
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-left">
+            <button id="startCapture">
+                <span class="icon icon-monitor"></span>
+                <span>Network Monitor</span>
+            </button>
+        </div>
+        <div class="header-right">
+            <div class="counter">
+                <span class="icon icon-entries"></span>
+                <span id="entryCount">0</span> Entries
+            </div>
+            <div class="counter" id="captureStatus">
+                <span>Capture :</span> <span class="status-text">&nbsp;Stopped</span>
+            </div>
+        </div>
+    </header>
+    
+    <div class="grid-container">
+        <!-- Update the chart containers with wrappers -->
+        <!-- Make sure each chart wrapper has its loading indicator -->
+<div class="chart-container">
+    <div class="chart-header">
+        <div class="chart-title">Network Traffic Timeline</div>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="timelineChart"></canvas>
+        <div class="loading" id="timelineLoading"></div>
+    </div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-header">
+        <div class="chart-title">Protocol Distribution</div>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="protocolChart"></canvas>
+        <div class="loading" id="protocolLoading"></div>
+    </div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-header">
+        <div class="chart-title">Top Source IPs</div>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="sourceIPChart"></canvas>
+        <div class="loading" id="sourceIPLoading"></div>
+    </div>
+</div>
+
+<div class="chart-container">
+    <div class="chart-header">
+        <div class="chart-title">Top Services (Ports)</div>
+    </div>
+    <div class="chart-wrapper">
+        <canvas id="servicesChart"></canvas>
+        <div class="loading" id="servicesLoading"></div>
+    </div>
+</div>
+
+<div class="chart-container alerts-container">
+    <div class="chart-header">
+        <div class="chart-title">Security Alerts</div>
+    </div>
+    <div class="alert-list" id="alertList">
+        <!-- Alerts will be inserted here dynamically -->
+    </div>
+    <div class="loading" id="alertsLoading"></div>
+</div>
+    </div>
+    
+    <div id="notification" style="display: none;">
+        <div class="notification-icon">⚠️</div>
+        <div class="notification-content">
+            <div class="notification-title">Alert Title</div>
+            <div class="notification-message">Alert message details here</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Log Analysis</title>
+  <script src="qrc:///qtwebchannel/qwebchannel.js"></script>
+  <script src="../js/log.js"></script>
+  <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+  <div class="container">
+
+    <!-- Action Buttons -->
+    <div class="buttons">
+      <button id="uploadBtn" class="action-btn">
+        <span style="font-size: 2.2rem;">🗂️</span>
+        <span style="margin-top: 0.5rem; font-size: 1.1rem;">Upload Logs</span>
+      </button>
+
+      <button id="viewBtn" class="action-btn">
+        <span style="font-size: 2.2rem;">📁</span>
+        <span style="margin-top: 0.5rem; font-size: 1.1rem;">View Logs</span>
+      </button>
+    </div>
+
+    <!-- Upload Logs Section -->
+<div id="uploadSection" class="section">
+  <div style="display: flex; justify-content: flex-start; margin-bottom: 1rem;">
+    <button id="uploadBackBtn" class="normal-btn">← Back</button>
+  </div>
+  <div class="drop-zone" id="dropZone">
+    <p>Drag and drop log files here</p>
+    <label for="fileInput" class="custom-file-btn">📂 Choose Files</label>
+    <input type="file" id="fileInput" multiple style="display: none;" />
+  </div>
+  <div id="fileUploadStatus" class="file-list"></div>
+</div>
+
+   <!-- View Logs Section -->
+   <div id="viewSection" class="section">
+    <div class="top-controls">
+        <!-- Back Button -->
+        <button id="backBtn" class="normal-btn">← Back</button>
+
+        <!-- Menu Right -->
+        <div class="menu-right">
+            <input type="text" placeholder="Search logs..." id="searchInput" />
+            <div class="menu-buttons">
+              <button id="anomalyScanBtn" class="normal-btn">🧠 Anomaly Scan</button>
+              <button id="analysisBtn" class="normal-btn">📊 Analysis</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="folderList" style="margin-top: 1rem;"></div>
+    <div class="log-view-grid" id="logGrid" ></div> 
+   </div>
+  
+  </div>
+
+</body>
+</html>
