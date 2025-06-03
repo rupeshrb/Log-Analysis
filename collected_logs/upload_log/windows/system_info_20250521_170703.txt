@@ -1,0 +1,242 @@
+=== Windows System Information ===
+Collection Time: 2025-05-21 17:07:03
+
+--- System Information ---
+
+Host Name:                     LAPTOP-RUPESH
+OS Name:                       Microsoft Windows 11 Home Single Language
+OS Version:                    10.0.26100 N/A Build 26100
+OS Manufacturer:               Microsoft Corporation
+OS Configuration:              Standalone Workstation
+OS Build Type:                 Multiprocessor Free
+Registered Owner:              N/A
+Registered Organization:       N/A
+Product ID:                    00327-36276-81527-AAOEM
+Original Install Date:         1/23/2025, 12:48:55 PM
+System Boot Time:              5/21/2025, 2:36:29 PM
+System Manufacturer:           LENOVO
+System Model:                  82B5
+System Type:                   x64-based PC
+Processor(s):                  1 Processor(s) Installed.
+                               [01]: AMD64 Family 23 Model 96 Stepping 1 AuthenticAMD ~3000 Mhz
+BIOS Version:                  LENOVO EUCN41WW, 9/20/2023
+Windows Directory:             C:\WINDOWS
+System Directory:              C:\WINDOWS\system32
+Boot Device:                   \Device\HarddiskVolume1
+System Locale:                 en-us;English (United States)
+Input Locale:                  00004009
+Time Zone:                     (UTC+05:30) Chennai, Kolkata, Mumbai, New Delhi
+Total Physical Memory:         15,741 MB
+Available Physical Memory:     6,718 MB
+Virtual Memory: Max Size:      17,917 MB
+Virtual Memory: Available:     5,629 MB
+Virtual Memory: In Use:        12,288 MB
+Page File Location(s):         C:\pagefile.sys
+Domain:                        WORKGROUP
+Logon Server:                  \\LAPTOP-RUPESH
+Hotfix(s):                     5 Hotfix(s) Installed.
+                               [01]: KB5056579
+                               [02]: KB5058411
+                               [03]: KB5058538
+                               [04]: KB5055659
+                               [05]: KB5058523
+Network Card(s):               3 NIC(s) Installed.
+                               [01]: Realtek PCIe GbE Family Controller
+                                     Connection Name: Ethernet
+                                     Status:          Media disconnected
+                               [02]: Intel(R) Wi-Fi 6 AX200 160MHz
+                                     Connection Name: Wi-Fi
+                                     DHCP Enabled:    Yes
+                                     DHCP Server:     192.168.31.1
+                                     IP address(es)
+                                     [01]: 192.168.31.133
+                                     [02]: fe80::79e5:a25c:f2fc:b9b
+                               [03]: Bluetooth Device (Personal Area Network)
+                                     Connection Name: Bluetooth Network Connection
+                                     Status:          Media disconnected
+Virtualization-based security: Status: Running
+                               Required Security Properties:
+                               Available Security Properties:
+                                     Base Virtualization Support
+                                     Secure Boot
+                                     DMA Protection
+                                     UEFI Code Readonly
+                                     SMM Security Mitigations 1.0
+                                     Mode Based Execution Control
+                               Services Configured:
+                               Services Running:
+                               App Control for Business policy: Enforced
+                               App Control for Business user mode policy: Off
+                               Security Features Enabled:
+Hyper-V Requirements:          A hypervisor has been detected. Features required for Hyper-V will not be displayed.
+
+
+--- Disk Information ---
+Caption  Description       FreeSpace     ProviderName  Size          
+
+C:       Local Fixed Disk  11971624960                 254721126400  
+
+D:       Local Fixed Disk  207100542976                892812128256  
+
+P:       Local Fixed Disk  44396048384                 107374178304  
+
+
+
+
+
+--- CPU Information ---
+Manufacturer  MaxClockSpeed  Name                                    NumberOfCores  NumberOfLogicalProcessors  
+
+AuthenticAMD  3000           AMD Ryzen 5 4600H with Radeon Graphics  6              12                         
+
+
+
+
+
+--- Memory Information ---
+Total: 15.37 GB
+Available: 6.49 GB
+Used: 8.88 GB
+Percentage: 57.8%
+
+--- Startup Programs ---
+Caption                                                   Command                                                                             Location                                                                                        User                  
+
+Send to OneNote                                           Send to OneNote.lnk                                                                 Startup                                                                                         LAPTOP-RUPESH\Rupesh  
+
+OneDrive                                                  "C:\Users\91940\AppData\Local\Microsoft\OneDrive\OneDrive.exe" /background          HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+MicrosoftEdgeAutoLaunch_A1F49FCC954FF8BA1357462536FDC818  "C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe" --win-session-start  HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+LenovoVantageToolbar                                      C:\ProgramData\Lenovo\Vantage\AddinData\LenovoBatteryGaugeAddin\x64\QSHelper.exe    HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+Honeygain                                                 "D:\honey-gain\honey\Honeygain.exe" -silent                                         HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+RiotClient                                                C:\Riot Games\Riot Client\RiotClientServices.exe --launch-background-mode           HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+utweb                                                     "C:\Users\91940\AppData\Roaming\uTorrent Web\utweb.exe" /MINIMIZED                  HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+Opera Stable                                              C:\Users\91940\AppData\Local\Programs\Opera\opera.exe                               HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+Opera Browser Assistant                                   C:\Users\91940\AppData\Local\Programs\Opera\assistant\browser_assistant.exe         HKU\S-1-5-21-104600034-1711013506-851453239-1001\SOFTWARE\Microsoft\Windows\CurrentVersion\Run  LAPTOP-RUPESH\Rupesh  
+
+Canon LBP2900 Status Window                               C:\Windows\System32\spool\drivers\x64\3\CNAB4LAD.EXE                                Common Startup                                                                                  Public                
+
+SecurityHealth                                            %windir%\system32\SecurityHealthSystray.exe                                         HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run                                              Public                
+
+Riot Vanguard                                             "C:\Program Files\Riot Vanguard\vgtray.exe"                                         HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run                                              Public                
+
+RtkAudUService                                            "C:\WINDOWS\System32\RtkAudUService64.exe" -background                              HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run                                              Public                
+
+
+
+
+
+--- Installed Software (Sample) ---
+
+
+
+
+Name=MySQL Documents 8.0
+
+Vendor=Oracle Corporation
+
+Version=8.0.28
+
+
+
+
+
+Name=MySQL Shell 8.0.28
+
+Vendor=Oracle and/or its affiliates
+
+Version=8.0.28
+
+
+
+
+
+Name=MySQL Examples and Samples 8.0
+
+Vendor=Oracle Corporation
+
+Version=8.0.28
+
+
+
+
+
+Name=Microsoft Office Professional Plus 2010
+
+Vendor=Microsoft Corporation
+
+Version=14.0.4763.1000
+
+
+
+
+
+Name=Microsoft Office OneNote MUI (English) 2010
+
+Vendor=Microsoft Corporation
+
+Version=14.0.4763.1000
+
+...(truncated)...
+
+--- Firewall Status ---
+
+Domain Profile Settings: 
+----------------------------------------------------------------------
+State                                 ON
+Firewall Policy                       BlockInbound,AllowOutbound
+LocalFirewallRules                    N/A (GPO-store only)
+LocalConSecRules                      N/A (GPO-store only)
+InboundUserNotification               Enable
+RemoteManagement                      Disable
+UnicastResponseToMulticast            Enable
+
+Logging:
+LogAllowedConnections                 Disable
+LogDroppedConnections                 Disable
+FileName                              %systemroot%\system32\LogFiles\Firewall\pfirewall.log
+MaxFileSize                           4096
+
+
+Private Profile Settings: 
+----------------------------------------------------------------------
+State                                 ON
+Firewall Policy                       BlockInbound,AllowOutbound
+LocalFirewallRules                    N/A (GPO-store only)
+LocalConSecRules                      N/A (GPO-store only)
+InboundUserNotification               Enable
+RemoteManagement                      Disable
+UnicastResponseToMulticast            Enable
+
+Logging:
+LogAllowedConnections                 Disable
+LogDroppedConnections                 Disable
+FileName                              %systemroot%\system32\LogFiles\Firewall\pfirewall.log
+MaxFileSize                           4096
+
+
+Public Profile Settings: 
+----------------------------------------------------------------------
+State                                 ON
+Firewall Policy                       BlockInbound,AllowOutbound
+LocalFirewallRules                    N/A (GPO-store only)
+LocalConSecRules                      N/A (GPO-store only)
+InboundUserNotification               Enable
+RemoteManagement                      Disable
+UnicastResponseToMulticast            Enable
+
+Logging:
+LogAllowedConnections                 Disable
+LogDroppedConnections                 Disable
+FileName                              %systemroot%\system32\LogFiles\Firewall\pfirewall.log
+MaxFileSize                           4096
+
+Ok.
+
+
