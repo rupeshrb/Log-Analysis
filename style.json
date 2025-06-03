@@ -1,0 +1,148 @@
+{
+	"QMainWindow":[
+		{
+			"tittle":"Log Analysis",
+			"icon":":/images/log.png",
+			"frameless": true,
+			"transluscentBg": true,
+			"sizeGrip": "sizeGrip",	
+			
+			"navigation":[
+				{
+					"minimize":"minimizeBtn",
+					"close": "closeBtn",
+					"restore":[
+						{	
+							"buttonName": "restoreBtn",
+							"normalIcon": ":/icons/icons/square.svg",
+							"maximizedIcon": ":/icons/icons/copy.svg"
+						}
+					],
+					"moveWindow": "header",
+					"tittleBar": "header"
+				}
+			]
+		}
+	],
+	"QCustomSlideMenu": [
+		{
+			"name": "leftMenu",
+			"defaultSize": [{
+				"width": 45,
+				"height": "parent"
+			}],
+			"collapsedSize": [{
+				"width": 45,
+				"height": "parent"
+			}],
+			"expandedSize": [{
+				"width": 150,
+				"height": "parent"
+			}],
+			"toggleButton": [{
+				"buttonName": "menuBtn",
+				"icons": [{
+					"whenMenuIsCollapsed": ":/icons/icons/align-justify.svg",
+					"whenMenuIsExpanded": ":/icons/icons/chevron-left.svg"
+				}]
+			}],
+			"menuTransitionAnimation": [{
+				"animationDuration": 250,
+				"animationEasingCurve": "Linear"
+			}]
+		},
+		{
+			"name": "centerMenu",
+			"defaultSize": [{
+				"width": 0,
+				"height": "parent"
+			}],
+			"collapsedSize": [{
+				"width": 0,
+				"height": "parent"
+			}],
+			"expandedSize": [{
+				"width": 250,
+				"height": "parent"
+			}],
+			"menuTransitionAnimation": [{
+				"animationDuration": 250,
+				"animationEasingCurve": "Linear"
+			}]
+		}
+	],
+	"QCustomQStackedWidget":[
+		{
+			"name":"mainPages",
+			"navigation":[
+				{
+					"navigationButtons":[
+						{
+							"homeBtn": "page_6",
+							"logBtn": "page_7",
+							"systemBtn":"page_9"
+						}
+					]
+				}
+			]
+	
+		},
+		{
+			"name":"centerMenuPages",
+			"navigation":[
+				{
+					"navigationButtons":[
+						{
+							
+							"infoBtn": "page_2",
+							"helpBtn": "page_3"
+						}
+					]
+				}
+			]
+	
+		},
+		{
+			"name":"rightMenuPages",
+			"navigation":[
+				{
+					"navigationButtons":[
+						{
+							"moreMenuBtn": "page_5",
+							"profileMenuBtn": "page_4"
+						}
+					]
+				}
+			]
+	
+		}
+	],
+	"QPushButtonGroup": [
+		{
+			"Buttons": [
+				"homeBtn",
+				"logBtn",
+				"systemBtn"
+			],
+			"Style":[
+				{
+					"Active": "background-color: #750080; ",
+					"NotActive": ""
+				}
+			]
+		},
+		{
+			"Buttons": [
+				
+				"infoBtn",
+				"helpBtn"
+			],
+			"Style":[
+				{
+					"Active": "background-color: #750080;",
+					"NotActive": ""
+				}
+			]
+		}
+	]
+}
