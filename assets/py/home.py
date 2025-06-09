@@ -130,10 +130,10 @@ class BackendClass_hom(QObject):
         """Setup SQLite database for network logs and alerts"""
         db_path = Path("log_analysis.db")
         self.conn = sqlite3.connect(str(db_path), check_same_thread=False)
-        
+
         with self.db_lock:
             cursor = self.conn.cursor()
-            
+
             # Create network logs table
             cursor.execute('''
             CREATE TABLE IF NOT EXISTS network_logs (
@@ -149,7 +149,7 @@ class BackendClass_hom(QObject):
                 details TEXT
             )
             ''')
-            
+
             # Create alerts table
             cursor.execute('''
             CREATE TABLE IF NOT EXISTS alerts (
@@ -162,7 +162,7 @@ class BackendClass_hom(QObject):
                 details TEXT
             )
             ''')
-            
+
             # Create maintenance log table
             cursor.execute('''
             CREATE TABLE IF NOT EXISTS maintenance_log (
@@ -172,8 +172,8 @@ class BackendClass_hom(QObject):
                 details TEXT
             )
             ''')
-            
-            # Create aggregated data cache table for performance
+
+            # Create aggregated data cache table
             cursor.execute('''
             CREATE TABLE IF NOT EXISTS data_aggregates (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -182,15 +182,30 @@ class BackendClass_hom(QObject):
                 updated_at TEXT
             )
             ''')
-            
-            # Create indexes for faster queries
+
+            # Create indexes
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_logs_timestamp ON network_logs (timestamp)')
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_alerts_timestamp ON alerts (timestamp)')
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_logs_protocol ON network_logs (protocol)')
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_logs_src_ip ON network_logs (src_ip)')
             cursor.execute('CREATE INDEX IF NOT EXISTS idx_logs_dst_port ON network_logs (dst_port)')
-            
+
             self.conn.commit()
+
+        # ✅ Check if this is the first run
+            cursor.execute('SELECT COUNT(*) FROM alerts')
+            alert_count = cursor.fetchone()[0]
+
+        # ✅ Only create the test alert if there are no existing alerts
+        if alert_count == 0:
+            self.create_alert(
+                alert_type="Test Alert",
+                description="This is a test alert to verify the system is working.",
+                severity="Low",
+                source_ip="127.0.0.1",
+                details={"test": True, "note": "Auto-generated on first run"}
+            )
+
     
     def setup_database_maintenance(self):
         """Setup automated database maintenance"""
