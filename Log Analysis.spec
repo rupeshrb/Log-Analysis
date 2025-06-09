@@ -1,6 +1,5 @@
 # -*- mode: python ; coding: utf-8 -*-
-
-import sys  
+import sys
 import os
 from PyInstaller.utils.hooks import collect_data_files, collect_submodules
 
@@ -22,7 +21,6 @@ a = Analysis(
         ('icons/*.svg', 'icons'),
         ('Qss/*', 'Qss'),  # Include all files in Qss directory
         ('log.ico', '.'),
-        ('style.json', '.'),
         ('models/*.joblib', 'models'),
         ('collected_logs', 'collected_logs'),
     ],
@@ -94,11 +92,7 @@ a = Analysis(
     noarchive=False,
     optimize=0,
 )
-
-# Add runtime hooks to ensure proper initialization of QtWebEngineProcess
-a.datas += [('qt.conf', '.', 'DATA')]
-
-pyz = PYZ(a.pure, a.zipped_data, cipher=None)
+pyz = PYZ(a.pure)
 
 exe = EXE(
     pyz,
@@ -113,7 +107,7 @@ exe = EXE(
     upx=True,
     upx_exclude=[],
     runtime_tmpdir=None,
-    console=True,  # Change to True temporarily for debugging
+    console=False,
     disable_windowed_traceback=False,
     argv_emulation=False,
     target_arch=None,
