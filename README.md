@@ -1,6 +1,6 @@
 Research paper publication :- "https://ijarcce.com/papers/log-analysis-understanding-and-enhancing-system-monitoring/"
 <div>
-  <img src="images/23.png" alt="1">
+  <img src="images/23.png" alt="23">
 </div>
 <br>
 <div>
